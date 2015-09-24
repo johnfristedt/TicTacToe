@@ -2,16 +2,41 @@
 <html>
 <head>
     <title>TicTacToe</title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/Style.css" rel="stylesheet" />
 </head>
 <body>
-    <content>
-        <div id="game-over-message"></div>
-        <table id="grid"></table>
-    </content>
+    <div class="container-fluid">
+        <content>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div id="lobby" class="table">
+                        <select id="gamelist" name="gamelist" size="5" class="form-control">
+                            <option>Game 1</option>
+                            <option>Game 2</option>
+                            <option>Game 3</option>
+                            <option>Game 4</option>
+                            <option>Game 5</option>
+                        </select>
+                        <input type="button" id="new-game" class="btn btn-default btn-lobby" value="Host Game"></input>
+                        <input type="button" id="join-game" class="btn btn-default btn-lobby" value="Join Game"></button>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div id="game">
+                        <div id="game-over-message"></div>
+                        <table id="grid"></table>
+                    </div>
+                </div>
+            </div>
+        </content>
+    </div>
 
     <script src="Scripts/jquery-2.1.4.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/Initialize.js"></script>
     <script src="Scripts/Game.js"></script>
 </body>
