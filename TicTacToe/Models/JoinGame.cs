@@ -5,9 +5,8 @@ using System.Web;
 
 namespace TicTacToe.Models
 {
-    public class Turn
+    public class JoinGame
     {
-        public int Row { get; set; }
-        public int Col { get; set; }
+        public string SessionId { get; set; }
     }
 }

@@ -1,30 +1,31 @@
 ﻿/// <reference path="jquery-2.1.4.js" />
 
-var boardSize = 3;
 var winCondition = 3;
 
 /* BUILD THE BOARD */
 
-//var grid = new Array(boardSize);
-//for (var i = 0; i < boardSize; i++) {
-//    grid[i] = new Array(boardSize);
-//}
+var grid = new Array(3);
+for (var i = 0; i < 3; i++) {
+    grid[i] = new Array(3);
+}
 
-for (var r = 0; r < boardSize; r++) {
-    $('#grid').append($('<tr></tr>'));
+function buildBoard(boardSize) {
+    for (var r = 0; r < boardSize; r++) {
+        $('#grid').append($('<tr></tr>').addClass('gridRow'));
 
-    for (var c = 0; c < boardSize; c++) {
-        var element = $('<td></td>')
-                        .addClass('node')
-                        .attr('row', r)
-                        .attr('col', c);
+        for (var c = 0; c < boardSize; c++) {
+            var element = $('<td></td>')
+                            .addClass('node')
+                            .attr('row', r)
+                            .attr('col', c);
 
-        element.css('width', (1 / boardSize) * 100 + '%');
-        element.css('height', (1 / boardSize) * 100 + '%');
+            element.css('width', (1 / boardSize) * 100 + '%');
+            element.css('height', (1 / boardSize) * 100 + '%');
 
-        //grid[r][c] = new Node(0, element);
+            grid[r][c] = element;
 
-        $('tr').last().append(element);
+            $('.gridRow').last().append(element);
+        }
     }
 }
 

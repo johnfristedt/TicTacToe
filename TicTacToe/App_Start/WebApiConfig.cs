@@ -13,8 +13,6 @@ namespace TicTacToe
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-            //var cors = new EnableCorsAttribute("http://localhost:1896", "*", "*");
-            //config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

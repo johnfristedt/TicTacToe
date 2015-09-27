@@ -30,7 +30,7 @@ namespace TicTacToe.Models
         {
             for (int r = 0; r < BoardSize; r++)
                 for (int c = 0; c < BoardSize; c++)
-                    Grid[r, c] = new Node { Player = 0, Row = r, Col = c };
+                    Grid[r, c] = new Node { Player = 0, Row = r, Col = c, Neighbours = new List<Node>() };
 
             for (int nodeRow = 0; nodeRow < BoardSize; nodeRow++)
                 for (int nodeCol = 0; nodeCol < BoardSize; nodeCol++)

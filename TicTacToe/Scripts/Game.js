@@ -5,42 +5,39 @@ var debug = false;
 var gameOver = false;
 var turn = true;
 var turns = 0;
+var session;
 
-/* PLAYER INPUT */
+var test = $.connection.ticTacToeHub;
+test.client.broadcastMessage = function (row, col) {
+    console.log('click');
+    if (turn)
+        grid[col][row].css('background-color', 'red');
+    else
+        grid[col][row].css('background-color', 'blue');
 
-$('.node').click(function () {
-    var row = parseInt($(this).attr('row'));
-    var col = parseInt($(this).attr('col'));
+    turn = !turn;
+    turns++;
+}
 
-    $.ajax({
-        url: 'api/game/test',
-        data: { player: turn ? 1 : 2, row: row, col: col },
-        type: 'POST',
-        success: function (data) {
-            console.log('Success');
+$.connection.hub.start().done(function () {
+
+    /* PLAYER INPUT */
+
+    $('#grid').on('click', '.node', function () {
+        var row = parseInt($(this).attr('row'));
+        var col = parseInt($(this).attr('col'));
+
+        if (!gameOver) {
+
+            test.server.send(row, col);
+
+            if (turns == session.boardSize * session.boardSize && !gameOver) {
+                $('#game-over-message').html('Draw');
+                gameOver = true;
+            }
         }
     });
 
-
-
-    if (!gameOver && grid[row][col].player == 0) {
-        if (turn)
-            $(this).css('background-color', 'red');
-        else
-            $(this).css('background-color', 'blue');
-
-        turn ? grid[row][col].player = 1 : grid[row][col].player = 2;
-
-        winCheck(row, col);
-
-        turn = !turn;
-        turns++;
-
-        if (turns == boardSize * boardSize && !gameOver) {
-            $('#game-over-message').html('Draw');
-            gameOver = true;
-        }
-    }
 });
 
 /* CHECK FOR WIN */

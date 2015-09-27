@@ -1,33 +1,50 @@
 ﻿body {
 }
 
-content {
-    border: 1px solid black;
+main {
+    position: absolute;
+    top: 0;
+    margin: 10px 0;
+    width: 100vw;
+}
+
+th {
+    padding: 0;
+    margin: 0;
+    height: 10px;
+}
+
+input {
+    margin: 0 0 10px 0;
 }
 
 #lobby {
-    border: 1px solid black;
-    width: 30vw;
+    width: 40vw;
     height: 20vw;
     margin: 0 auto;
 }
 
 #gamelist {
-    display: inline-block;
+    display: inline;
     background: white;
-    width: 80%;
+    width: 100%;
     height: 100%;
     line-height: 200px;
     margin: 0 auto;
 }
 
 #grid {
-    width: 20vw;
-    height: 20vw;
+    width: 40vw;
+    height: 40vw;
     border: 1px solid black;
     margin: 0 auto;
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+#host-modal .modal-content {
+    width: 400px;
+    margin: 0 auto;
 }
 
 .node {
@@ -39,9 +56,18 @@ content {
     font-size: 24px;
 }
 
+#lobby-buttons {
+    width: 100%;
+}
+
 .btn-lobby {
     display: inline-block;
-    float: right;
-    padding: 5px 10px;
-    margin: 0;
+    width: 100%;
+    clear: left;
+    padding: 10px 10px;
+    margin: 0 0 10px 0;
+}
+
+.hidden {
+    display: none;
 }

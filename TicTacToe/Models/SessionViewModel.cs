@@ -5,11 +5,10 @@ using System.Web;
 
 namespace TicTacToe.Models
 {
-    public class NewGame
+    public class SessionViewModel
     {
+        public string SessionID { get; set; }
         public string SessionName { get; set; }
         public int BoardSize { get; set; }
-        public int WinCondition { get; set; }
-
     }
 }
