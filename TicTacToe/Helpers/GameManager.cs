@@ -8,11 +8,6 @@ namespace TicTacToe.Helpers
 {
     public class GameManager
     {
-        public List<Session> ActiveSessions { get; set; }
-
-        public GameManager()
-        {
-            this.ActiveSessions = new List<Session>();
-        }
+        public static List<Session> ActiveSessions = new List<Session>();
     }
 }

@@ -12,18 +12,16 @@ namespace TicTacToe.Controllers
     [RoutePrefix("api/game")]
     public class GameController : ApiController
     {
-        GameManager game = new GameManager();
-
         [HttpGet]
         [Route("sessions")]
         public SessionViewModel[] Sessions()
         {
-            //if (GameHelper.ActiveSessions.Count < 2)
-            //    GameHelper.ActiveSessions.Add(new Session("Test", 3, 3));
+            if (GameManager.ActiveSessions.Count < 2)
+                GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
 
             var sessions = new List<SessionViewModel>();
 
-            foreach (var session in GameHelper.ActiveSessions)
+            foreach (var session in GameManager.ActiveSessions)
             {
                 sessions.Add(new SessionViewModel
                 {
@@ -40,7 +38,7 @@ namespace TicTacToe.Controllers
         [Route("join")]
         public SessionViewModel Join([FromBody]JoinGame model)
         {
-            var session = GameHelper.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
+            var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
             var vm = new SessionViewModel
             {
                 SessionID = session.SessionID,
@@ -56,7 +54,7 @@ namespace TicTacToe.Controllers
         public object New([FromBody]NewGame model)
         {
             var session = new Session(model.SessionName, model.BoardSize, model.WinCondition);
-            GameHelper.ActiveSessions.Add(session);
+            GameManager.ActiveSessions.Add(session);
 
             return new SessionViewModel
             {

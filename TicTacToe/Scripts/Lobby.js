@@ -17,33 +17,30 @@ $.ajax({
     }
 });
 
-/* CREATE NEW GAME */
+game.client.buildBoard = function (data) {
+    loadBoard(data);
+};
 
-$('#new-game').click(function () {
-    $.ajax({
-        url: 'api/game/new',
-        data: { sessionName: $('#session-name').val(),
-                boardSize: $('#board-size').val(),
-                winCondition: $('#win-condition').val()
-        },
-        type: 'POST',
-        success: function (data) {
-            loadBoard(data);
-        }
+$.connection.hub.start().done(function () {
+
+    /* CREATE NEW GAME */
+
+    $('#new-game').click(function () {
+        game.server.newGame({
+            sessionName: $('#session-name').val(),
+            boardSize: $('#board-size').val(),
+            winCondition: $('#win-condition').val()
+        });
     });
-});
 
-/* JOIN GAME */
+    /* JOIN GAME */
 
-$('#join-game').click(function () {
-    turn = false;
-    $.ajax({
-        url: 'api/game/join',
-        data: { sessionId: $('#gamelist').find(':selected').attr('sessionid') },
-        type: 'POST',
-        success: function (data) {
-            loadBoard(data);
-        }
+    $('#join-game').click(function () {
+        game.server.joinGame({
+            sessionId: $('#gamelist').find(':selected').attr('sessionid')
+        });
+
+        turn = false;
     });
 });
 
@@ -52,5 +49,5 @@ function loadBoard(data) {
     $('#lobby').toggleClass('hidden');
     $('#game').toggleClass('hidden');
 
-    buildBoard(data.BoardSize);
+    buildBoard(data);
 }

@@ -7,9 +7,9 @@ var turn = true;
 var turns = 0;
 var session;
 
-var test = $.connection.ticTacToeHub;
-test.client.broadcastMessage = function (row, col) {
-    console.log('click');
+var game = $.connection.ticTacToeHub;
+
+game.client.turn = function (row, col) {
     if (turn)
         grid[col][row].css('background-color', 'red');
     else
@@ -24,16 +24,22 @@ $.connection.hub.start().done(function () {
     /* PLAYER INPUT */
 
     $('#grid').on('click', '.node', function () {
-        var row = parseInt($(this).attr('row'));
-        var col = parseInt($(this).attr('col'));
+        if (turn) {
+            var row = parseInt($(this).attr('row'));
+            var col = parseInt($(this).attr('col'));
 
-        if (!gameOver) {
+            if (!gameOver) {
 
-            test.server.send(row, col);
+                game.server.turn({
+                    sessionId: session.SessionId,
+                    row: row,
+                    col: col
+                });
 
-            if (turns == session.boardSize * session.boardSize && !gameOver) {
-                $('#game-over-message').html('Draw');
-                gameOver = true;
+                if (turns == session.boardSize * session.boardSize && !gameOver) {
+                    $('#game-over-message').html('Draw');
+                    gameOver = true;
+                }
             }
         }
     });
@@ -42,42 +48,42 @@ $.connection.hub.start().done(function () {
 
 /* CHECK FOR WIN */
 
-function winCheck(row, col) {
-    var currentNode = grid[row][col];
+//function winCheck(row, col) {
+//    var currentNode = grid[row][col];
 
-    for (var i = 0; i < currentNode.neighbours.length; i++) {
-        var currentNeighbour = currentNode.neighbours[i];
+//    for (var i = 0; i < currentNode.neighbours.length; i++) {
+//        var currentNeighbour = currentNode.neighbours[i];
 
-        if (currentNeighbour.player == currentNode.player) {
-            var streak = 2;
+//        if (currentNeighbour.player == currentNode.player) {
+//            var streak = 2;
 
-            while (true) {
-                var nextRow = (currentNeighbour.row - currentNode.row) + currentNeighbour.row;
-                var nextCol = (currentNeighbour.col - currentNode.col) + currentNeighbour.col;
+//            while (true) {
+//                var nextRow = (currentNeighbour.row - currentNode.row) + currentNeighbour.row;
+//                var nextCol = (currentNeighbour.col - currentNode.col) + currentNeighbour.col;
 
-                if (!outOfBounds(nextRow, nextCol)) {
-                    currentNode = currentNeighbour;
-                    currentNeighbour = grid[nextRow][nextCol];
+//                if (!outOfBounds(nextRow, nextCol)) {
+//                    currentNode = currentNeighbour;
+//                    currentNeighbour = grid[nextRow][nextCol];
 
-                    if (currentNeighbour.player == currentNode.player)
-                        streak++;
-                    else
-                        break;
+//                    if (currentNeighbour.player == currentNode.player)
+//                        streak++;
+//                    else
+//                        break;
 
-                    if (streak == winCondition) {
-                        $('#game-over-message').html('Player ' + currentNode.player + ' wins!');
-                        gameOver = true;
-                        break;
-                    }
-                }
-                else
-                    break;
-            }
-        }
+//                    if (streak == winCondition) {
+//                        $('#game-over-message').html('Player ' + currentNode.player + ' wins!');
+//                        gameOver = true;
+//                        break;
+//                    }
+//                }
+//                else
+//                    break;
+//            }
+//        }
 
-        currentNode = grid[row][col];
-    }
-}
+//        currentNode = grid[row][col];
+//    }
+//}
 
 /* DEBUG */
 
