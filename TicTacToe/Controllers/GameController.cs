@@ -16,12 +16,12 @@ namespace TicTacToe.Controllers
         [Route("sessions")]
         public SessionViewModel[] Sessions()
         {
-            if (GameManager.ActiveSessions.Count < 2)
-                GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
+            //if (GameManager.ActiveSessions.Count < 2)
+            //    GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
 
             var sessions = new List<SessionViewModel>();
 
-            foreach (var session in GameManager.ActiveSessions)
+            foreach (var session in GameManager.ActiveSessions.Where(s => s.Users.Count < 2))
             {
                 sessions.Add(new SessionViewModel
                 {
@@ -61,6 +61,17 @@ namespace TicTacToe.Controllers
                 SessionName = model.SessionName,
                 BoardSize = model.BoardSize
             };
+        }
+
+        [HttpPost]
+        [Route("turn")]
+        public bool Turn([FromBody]Turn model)
+        {
+            var turn = GameManager.ActiveSessions.Single(s => s.SessionID == model.SessionId).Turn;
+            if (model.PlayerIndex == 1)
+                return turn;
+            else
+                return !turn;
         }
     }
 }

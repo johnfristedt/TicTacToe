@@ -9,6 +9,7 @@ namespace TicTacToe.Models
     {
         public string SessionID { get; set; }
         public string SessionName { get; set; }
+        public int PlayerIndex { get; set; }
         public int BoardSize { get; set; }
     }
 }

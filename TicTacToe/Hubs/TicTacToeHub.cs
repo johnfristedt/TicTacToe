@@ -20,10 +20,13 @@ namespace TicTacToe
             {
                 SessionID = session.SessionID,
                 SessionName = model.SessionName,
+                PlayerIndex = 1,
                 BoardSize = model.BoardSize
             };
 
             Clients.Caller.buildBoard(vm);
+            vm.PlayerIndex = 0;
+            Clients.All.addSession(vm);
         }
 
         public void JoinGame(JoinGame model)
@@ -38,6 +41,7 @@ namespace TicTacToe
             {
                 SessionID = session.SessionID,
                 SessionName = session.SessionName,
+                PlayerIndex = 2,
                 BoardSize = session.Board.BoardSize
             };
 
@@ -49,13 +53,18 @@ namespace TicTacToe
             var users = Clients.Caller;
             var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
             
-            session.Board.Grid[model.Row, model.Col].Player = 1;
+            session.Board.Grid[model.Row, model.Col].Player = model.PlayerIndex;
 
-            GameHelper.WinCheck(model.Col, model.Row, session.Board);
+            var player = GameHelper.WinCheck(model.Col, model.Row, session.Board);
 
             foreach (var user in session.Users)
             {
-                user.turn(model.Col, model.Row);
+                if (player != 0)
+                    user.gameOver(player);
+
+                user.turn(model.Col, model.Row, session.Turn);
+
+                GameManager.ActiveSessions.Remove(session);
             }
         }
     }

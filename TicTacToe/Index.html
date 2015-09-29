@@ -6,35 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/Style.css" rel="stylesheet" />
+    <link href="Content/Animations.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container-fluid">
         <main>
-            <table id="lobby" class="table">
-                <tr>
-                    <th>Game List</th>
-                    <th>Stuff</th>
-                </tr>
-                <tr>
-                    <td style="width: 70%">
-                        <select id="gamelist" name="gamelist" size="5" class="form-control"></select>
-                    </td>
-                    <td>
-                        <table id="lobby-buttons">
-                            <tr>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-lobby" data-toggle="modal" data-target="#host-modal">Host Game</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="button" id="join-game" class="btn btn-default btn-lobby" value="Join Game">
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <div ng-app="lobbyApp" ng-controller="lobbyCtrl">
+                <table id="lobby" class="table">
+                    <tr>
+                        <th>Game List</th>
+                        <th>Stuff</th>
+                    </tr>
+                    <tr>
+                        <td style="width: 70%">
+                            <select id="gamelist" name="gamelist" size="5" class="form-control">
+                                <option ng-repeat="session in sessions" sessionid="{{session.SessionID}}">
+                                    {{session.SessionName}}
+                                </option>
+                            </select>
+                        </td>
+                        <td style="width: 30%">
+                            <table id="lobby-buttons">
+                                <tr>
+                                    <td>
+                                        <button type="button" id="host-game" class="btn btn-default btn-lobby" data-toggle="modal" data-target="#host-modal">Host Game</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="button" id="join-game" class="btn btn-default btn-lobby" value="Join Game">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div id="game" class="hidden">
                 <div id="game-over-message"></div>
                 <table id="grid"></table>
@@ -79,6 +86,7 @@
     </div>
 
     <script src="Scripts/jquery-2.1.4.min.js"></script>
+    <script src="Scripts/angular/angular.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="signalr/hubs"></script>

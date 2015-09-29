@@ -1,24 +1,41 @@
 ﻿/// <reference path="jquery-2.1.4.js" />
+/// <reference path="angular/angular.js" />
 /// <reference path="jquery.signalR-2.2.0.js" />
 /// <reference path="Initialize.js" />
 /// <reference path="Game.js" />
 
-/* GET ACTIVE SESSIONS FROM SERVER */
+/* ANGULAR LOBBY CONTROLLER */
 
-$.ajax({
-    url: 'api/game/sessions',
-    type: 'GET',
-    success: function (data) {
-        console.log(data);
-        for (var i = 0; i < data.length; i++)
-            $('#gamelist').append($('<option></option>')
-                                    .html(data[i].SessionName)
-                                    .attr('sessionid', data[i].SessionID));
-    }
+var lobbyApp = angular.module('lobbyApp', []);
+lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
+
+    /* GET SESSIONS FROM SERVER */
+
+    $http.get('api/game/sessions')
+        .success(function (data) {
+            console.log(data);
+            $scope.sessions = data;
+        });
+
+    game.client.addSession = function (session) {
+        $scope.sessions = [
+            session
+        ];
+        console.log($scope.sessions);
+    };
+});
+
+$('#host-game').click(function () {
+    var wait = setInterval(function () {
+        $('#session-name').focus();
+        clearInterval(wait);
+    }, 500);
 });
 
 game.client.buildBoard = function (data) {
-    loadBoard(data);
+    session = data;
+    console.log(session);
+    startGame(session);
 };
 
 $.connection.hub.start().done(function () {
@@ -44,10 +61,13 @@ $.connection.hub.start().done(function () {
     });
 });
 
-function loadBoard(data) {
-    session = data;
-    $('#lobby').toggleClass('hidden');
-    $('#game').toggleClass('hidden');
-
-    buildBoard(data);
+function startGame(session) {
+    $('#lobby').toggleClass('fade-out');
+    var wait = setInterval(function () {
+        $('#lobby').toggleClass('hidden');
+        $('#game').toggleClass('fade-in');
+        $('#game').toggleClass('hidden');
+        clearInterval(wait);
+    }, 1000);
+    buildBoard(session);
 }
