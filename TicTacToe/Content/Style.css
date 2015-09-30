@@ -11,8 +11,9 @@ body {
 main {
     position: absolute;
     top: 0;
-    margin: 10px 0;
     width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
 }
 
 th {
@@ -27,10 +28,15 @@ input {
 .container-fluid {
     padding: 0;
 }
+#lobby, #game {
+    position: absolute;
+    top: 10px;
+}
+
 #lobby {
     width: 60vw;
     height: 70vh;
-    margin: 0 auto;
+    left: calc(50vw - 30vw);
 
 }
 
@@ -41,6 +47,11 @@ input {
     height: 100%;
     line-height: 200px;
     margin: 0 auto;
+}
+
+#game {
+    width: 60vw;
+    left: calc(50vw - 30vw);
 }
 
 #grid {

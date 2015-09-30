@@ -18,9 +18,7 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
         });
 
     game.client.addSession = function (session) {
-        $scope.sessions = [
-            session
-        ];
+        $scope.sessions.push(session);
         console.log($scope.sessions);
     };
 });
@@ -28,6 +26,8 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
 $('#host-game').click(function () {
     var wait = setInterval(function () {
         $('#session-name').focus();
+        $('#board-size').val(3);
+        $('#win-condition').val(3);
         clearInterval(wait);
     }, 500);
 });
@@ -62,12 +62,27 @@ $.connection.hub.start().done(function () {
 });
 
 function startGame(session) {
-    $('#lobby').toggleClass('fade-out');
+    $('#game').toggleClass('hidden');
+    $('#lobby').toggleClass('out-left');
+    $('#game').toggleClass('in-right');
     var wait = setInterval(function () {
         $('#lobby').toggleClass('hidden');
-        $('#game').toggleClass('fade-in');
-        $('#game').toggleClass('hidden');
+        $('#lobby').toggleClass('out-left');
+        $('#game').toggleClass('in-right');
         clearInterval(wait);
     }, 1000);
     buildBoard(session);
 }
+
+$('#leave-game').click(function () {
+    $('#lobby').toggleClass('hidden');
+    $('#game').toggleClass('out-left');
+    $('#lobby').toggleClass('in-right');
+    var wait = setInterval(function () {
+        $('#game').toggleClass('hidden');
+        $('#game').toggleClass('out-left');
+        $('#lobby').toggleClass('in-right');
+        $('#grid').html("");
+        clearInterval(wait);
+    }, 1000);
+});

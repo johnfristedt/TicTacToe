@@ -21,15 +21,49 @@
     }
 }
 
-.fade-in, .fade-out {
-    animation-duration: 0.5s;
+@keyframes outLeft {
+    from {
+        left: calc(50vw - 30vw);
+    }
+    to {
+        left: -100vw;
+    }
+}
+
+@keyframes inRight {
+    from {
+        left: 100vw;
+    }
+    to {
+        left: calc(50vw - 30vw);
+    }
+}
+
+.fade-in, .fade-out, .out-left, .in-right {
+    
+}
+
+.out-left, .in-right {
+    position: absolute;
+    animation-duration: 1s;
 }
 
 .fade-in {
     animation: fadeIn;
+    animation-duration: 1s;
 }
 
 .fade-out {
     animation: fadeOut;
     animation-fill-mode: forwards;
+}
+
+.out-left {
+    animation: outLeft;
+    animation-duration: 1s;
+}
+
+.in-right {
+    animation: inRight;
+    animation-duration: 1s;
 }

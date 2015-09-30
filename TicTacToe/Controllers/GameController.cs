@@ -16,12 +16,12 @@ namespace TicTacToe.Controllers
         [Route("sessions")]
         public SessionViewModel[] Sessions()
         {
-            //if (GameManager.ActiveSessions.Count < 2)
-            //    GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
+            if (GameManager.ActiveSessions.Count < 2)
+                GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
 
             var sessions = new List<SessionViewModel>();
 
-            foreach (var session in GameManager.ActiveSessions.Where(s => s.Users.Count < 2))
+            foreach (var session in GameManager.ActiveSessions.Where(s => s.Users.Count >= 0))
             {
                 sessions.Add(new SessionViewModel
                 {

@@ -3,15 +3,15 @@
 <head>
     <title>TicTacToe</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/Style.css" rel="stylesheet" />
     <link href="Content/Animations.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container-fluid">
-        <main>
-            <div ng-app="lobbyApp" ng-controller="lobbyCtrl">
+    <div ng-app="lobbyApp" ng-controller="lobbyCtrl">
+        <div class="container-fluid">
+            <main>
                 <table id="lobby" class="table">
                     <tr>
                         <th>Game List</th>
@@ -41,45 +41,47 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div id="game" class="hidden">
-                <div id="game-over-message"></div>
-                <table id="grid"></table>
-            </div>
-        </main>
-    </div>
 
-    <div id="host-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Host Game</h4>
+                <div id="game" class="hidden">
+                    <div id="game-over-message"></div>
+                    <table id="grid"></table>
+                    <button id="leave-game">Leave Game</button>
                 </div>
-                <div class="modal-body">
-                    <table class="form-group">
-                        <tr>
-                            <td>
-                                <label for="session-name">Session name</label>
-                                <input type="text" id="session-name" class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="board-size">Board size</label>
-                                <input type="number" id="board-size" class="form-control" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="win-condition">Row length to win</label>
-                                <input type="number" id="win-condition" class="form-control" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="new-game" class="btn btn-default" data-dismiss="modal">Create session</button>
+            </main>
+        </div>
+
+        <div id="host-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Host Game</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="form-group">
+                            <tr>
+                                <td>
+                                    <label for="session-name">Session name</label>
+                                    <input type="text" id="session-name" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="board-size">Board size: {{boardSize}}</label>
+                                    <input type="range" id="board-size" min="3" max="10" value="3" ng-model="boardSize" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="win-condition">Row length to win: {{winCondition}}</label>
+                                    <input type="range" id="win-condition" min="3" max="10" value="3" ng-model="winCondition" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="new-game" class="btn btn-default" data-dismiss="modal">Create session</button>
+                    </div>
                 </div>
             </div>
         </div>
