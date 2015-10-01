@@ -52,19 +52,24 @@ namespace TicTacToe
         {
             var users = Clients.Caller;
             var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
-            
-            session.Board.Grid[model.Row, model.Col].Player = model.PlayerIndex;
 
-            var player = GameHelper.WinCheck(model.Col, model.Row, session.Board);
-
-            foreach (var user in session.Users)
+            if ((session.Turn && model.PlayerIndex == 1) || (!session.Turn && model.PlayerIndex == 2))
             {
-                if (player != 0)
-                    user.gameOver(player);
+                session.Board.Grid[model.Row, model.Col].Player = model.PlayerIndex;
 
-                user.turn(model.Col, model.Row, session.Turn);
+                var playerWin = GameHelper.WinCheck(model.Col, model.Row, session.Board);
+                foreach (var user in session.Users)
+                {
+                    if (playerWin != 0)
+                    {
+                        user.gameOver(playerWin);
+                    }
 
-                GameManager.ActiveSessions.Remove(session);
+                    user.turn(model.Col, model.Row, session.Turn);
+                }
+
+                if (playerWin != 0) GameManager.ActiveSessions.Remove(session);
+                else session.Turn = !session.Turn;
             }
         }
     }
