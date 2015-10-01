@@ -16,8 +16,8 @@ namespace TicTacToe.Controllers
         [Route("sessions")]
         public SessionViewModel[] Sessions()
         {
-            if (GameManager.ActiveSessions.Count < 2)
-                GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
+            //if (GameManager.ActiveSessions.Count < 2)
+            //    GameManager.ActiveSessions.Add(new Session("Test", 3, 3));
 
             var sessions = new List<SessionViewModel>();
 
@@ -38,7 +38,7 @@ namespace TicTacToe.Controllers
         [Route("join")]
         public SessionViewModel Join([FromBody]JoinGame model)
         {
-            var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
+            var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionID));
             var vm = new SessionViewModel
             {
                 SessionID = session.SessionID,
@@ -67,7 +67,7 @@ namespace TicTacToe.Controllers
         [Route("turn")]
         public bool Turn([FromBody]Turn model)
         {
-            var turn = GameManager.ActiveSessions.Single(s => s.SessionID == model.SessionId).Turn;
+            var turn = GameManager.ActiveSessions.Single(s => s.SessionID == model.SessionID).Turn;
             if (model.PlayerIndex == 1)
                 return turn;
             else

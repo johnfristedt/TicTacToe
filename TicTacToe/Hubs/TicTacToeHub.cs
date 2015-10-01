@@ -26,17 +26,17 @@ namespace TicTacToe
 
             Clients.Caller.buildBoard(vm);
             vm.PlayerIndex = 0;
-            Clients.All.addSession(vm);
+            Clients.Others.addSession(vm);
         }
 
         public void JoinGame(JoinGame model)
         {
             GameManager.ActiveSessions
-                .Single(s => String.Equals(s.SessionID, model.SessionId))
+                .Single(s => String.Equals(s.SessionID, model.SessionID))
                 .Users
                 .Add(Clients.Caller);
 
-            var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
+            var session = GameHelper.GetSession(model.SessionID);
             var vm = new SessionViewModel
             {
                 SessionID = session.SessionID,
@@ -48,10 +48,16 @@ namespace TicTacToe
             Clients.Caller.buildBoard(vm);
         }
 
+        public void LeaveGame(LeaveGame model)
+        {
+            GameManager.ActiveSessions.Remove(GameHelper.GetSession(model.SessionID));
+            Clients.All.RemoveSession(model.SessionID);
+        }
+
         public void Turn(Turn model)
         {
             var users = Clients.Caller;
-            var session = GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, model.SessionId));
+            var session = GameHelper.GetSession(model.SessionID);
 
             if ((session.Turn && model.PlayerIndex == 1) || (!session.Turn && model.PlayerIndex == 2))
             {

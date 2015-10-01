@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TicTacToe.Models
 {
-    public class JoinGame
+    public class LeaveGame
     {
         public string SessionID { get; set; }
     }

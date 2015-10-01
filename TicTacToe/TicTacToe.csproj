@@ -932,6 +932,7 @@
     <Compile Include="Hubs\TicTacToeHub.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\JoinGame.cs" />
+    <Compile Include="Models\LeaveGame.cs" />
     <Compile Include="Models\NewGame.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionViewModel.cs" />

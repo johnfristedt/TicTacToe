@@ -7,7 +7,7 @@ namespace TicTacToe.Models
 {
     public class Turn
     {
-        public string SessionId { get; set; }
+        public string SessionID { get; set; }
         public int PlayerIndex { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }

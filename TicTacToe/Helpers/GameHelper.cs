@@ -56,5 +56,10 @@ namespace TicTacToe.Helpers
 
             return 0;
         }
+
+        public static Session GetSession(string sessionID)
+        {
+            return GameManager.ActiveSessions.Single(s => String.Equals(s.SessionID, sessionID));
+        }
     }
 }

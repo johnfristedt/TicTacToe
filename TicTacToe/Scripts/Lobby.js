@@ -17,9 +17,23 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
             $scope.sessions = data;
         });
 
+    /* UPDATE LOBBY WITH SIGNALR */
+
     game.client.addSession = function (session) {
-        $scope.sessions.push(session);
-        console.log($scope.sessions);
+        $scope.$apply(function () {
+            $scope.sessions.splice(0, 0, session);
+        });
+    };
+
+    game.client.removeSession = function (sessionId) {
+        console.log('before');
+        $scope.$apply(function () {
+            for (var i = 0; i < $scope.sessions.length; i++) {
+                if ($scope.sessions[i].SessionID == sessionId)
+                    $scope.sessions.remove(i);
+            }
+        });
+        console.log('after');
     };
 });
 
@@ -83,6 +97,7 @@ $('#leave-game').click(function () {
         $('#game').toggleClass('out-left');
         $('#lobby').toggleClass('in-right');
         $('#grid').html("");
+        $('#game-over-message').html("");
         clearInterval(wait);
     }, 1000);
 });
