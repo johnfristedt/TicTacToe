@@ -12,6 +12,7 @@ namespace TicTacToe.Models
         public string SessionName { get; set; }
         public Board Board { get; set; }
         public bool Turn { get; set; }
+        public bool GameOver { get; set; }
         public List<dynamic> Users { get; set; }
 
         public Session(string sessionName, int boardSize, int winCondition)
@@ -20,6 +21,7 @@ namespace TicTacToe.Models
             this.SessionName = sessionName;
             this.Board = new Board(boardSize, winCondition);
             this.Turn = true;
+            this.GameOver = false;
             this.Users = new List<dynamic>();
         }
     }

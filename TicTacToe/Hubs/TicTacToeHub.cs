@@ -50,32 +50,39 @@ namespace TicTacToe
 
         public void LeaveGame(LeaveGame model)
         {
-            GameManager.ActiveSessions.Remove(GameHelper.GetSession(model.SessionID));
-            Clients.All.RemoveSession(model.SessionID);
+            var session = GameHelper.GetSession(model.SessionID);
+            if (!session.GameOver)
+            {
+                session.GameOver = true;
+                session.Users.Remove(Clients.Caller);
+                Clients.All.RemoveSession(model.SessionID);
+            }
         }
 
         public void Turn(Turn model)
         {
-            var users = Clients.Caller;
             var session = GameHelper.GetSession(model.SessionID);
 
-            if ((session.Turn && model.PlayerIndex == 1) || (!session.Turn && model.PlayerIndex == 2))
+            if (((session.Turn && model.PlayerIndex == 1) || (!session.Turn && model.PlayerIndex == 2)) && !session.GameOver)
             {
-                session.Board.Grid[model.Row, model.Col].Player = model.PlayerIndex;
-
-                var playerWin = GameHelper.WinCheck(model.Col, model.Row, session.Board);
-                foreach (var user in session.Users)
+                if (session.Board.Grid[model.Row, model.Col].Player == 0)
                 {
-                    if (playerWin != 0)
+                    session.Board.Grid[model.Row, model.Col].Player = model.PlayerIndex;
+
+                    var playerWin = GameHelper.WinCheck(model.Col, model.Row, session.Board);
+                    foreach (var user in session.Users)
                     {
-                        user.gameOver(playerWin);
+                        if (playerWin != 0)
+                        {
+                            user.gameOver(playerWin);
+                        }
+
+                        user.turn(model.Col, model.Row, session.Turn);
                     }
 
-                    user.turn(model.Col, model.Row, session.Turn);
+                    if (playerWin != 0) session.GameOver = true;
+                    else session.Turn = !session.Turn;
                 }
-
-                if (playerWin != 0) GameManager.ActiveSessions.Remove(session);
-                else session.Turn = !session.Turn;
             }
         }
     }

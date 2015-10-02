@@ -21,7 +21,7 @@ namespace TicTacToe.Controllers
 
             var sessions = new List<SessionViewModel>();
 
-            foreach (var session in GameManager.ActiveSessions.Where(s => s.Users.Count >= 0))
+            foreach (var session in GameManager.ActiveSessions.Where(s => s.Users.Count < 2 && !s.GameOver))
             {
                 sessions.Add(new SessionViewModel
                 {

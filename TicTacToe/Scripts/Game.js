@@ -18,8 +18,6 @@ game.client.turn = function (row, col, turn) {
 
 game.client.gameOver = function (data) {
     $('#game-over-message').html('Player ' + data + ' wins!');
-    gameOver = true;
-    game.server.leaveGame(session.sessionId);
 };
 
 $.connection.hub.start().done(function () {
@@ -39,7 +37,7 @@ $.connection.hub.start().done(function () {
     });
 
     $('#leave-game').click(function () {
-        game.server.leaveGame(session.sessionId);
+        game.server.leaveGame(session.SessionID);
     });
 
 });
