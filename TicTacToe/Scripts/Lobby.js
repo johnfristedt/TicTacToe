@@ -30,7 +30,7 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
         $scope.$apply(function () {
             for (var i = 0; i < $scope.sessions.length; i++) {
                 if ($scope.sessions[i].SessionID == sessionId)
-                    $scope.sessions.splice(i, 0);
+                    $scope.sessions.splice(i, 1);
             }
         });
         console.log('after');
@@ -76,12 +76,14 @@ $.connection.hub.start().done(function () {
 });
 
 function startGame(session) {
-    $('#game').toggleClass('hidden');
+    $('#game')
+        .toggleClass('hidden')
+        .toggleClass('in-right');
     $('#lobby').toggleClass('out-left');
-    $('#game').toggleClass('in-right');
     var wait = setInterval(function () {
-        $('#lobby').toggleClass('hidden');
-        $('#lobby').toggleClass('out-left');
+        $('#lobby')
+            .toggleClass('hidden')
+            .toggleClass('out-left');
         $('#game').toggleClass('in-right');
         clearInterval(wait);
     }, 1000);
@@ -89,12 +91,10 @@ function startGame(session) {
 }
 
 $('#leave-game').click(function () {
-    $('#lobby').toggleClass('hidden');
+    $('#lobby').toggleClass('hidden').toggleClass('in-right');
     $('#game').toggleClass('out-left');
-    $('#lobby').toggleClass('in-right');
     var wait = setInterval(function () {
-        $('#game').toggleClass('hidden');
-        $('#game').toggleClass('out-left');
+        $('#game').toggleClass('hidden').toggleClass('out-left');
         $('#lobby').toggleClass('in-right');
         $('#grid').html("");
         $('#game-over-message').html("");

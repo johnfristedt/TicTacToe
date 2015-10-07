@@ -37,7 +37,7 @@ $.connection.hub.start().done(function () {
     });
 
     $('#leave-game').click(function () {
-        game.server.leaveGame(session.SessionID);
+        game.server.leaveGame({ SessionID: session.SessionID });
     });
 
 });
