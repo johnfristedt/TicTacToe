@@ -30,7 +30,7 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
         $scope.$apply(function () {
             for (var i = 0; i < $scope.sessions.length; i++) {
                 if ($scope.sessions[i].SessionID == sessionId)
-                    $scope.sessions.remove(i);
+                    $scope.sessions.splice(i, 0);
             }
         });
         console.log('after');

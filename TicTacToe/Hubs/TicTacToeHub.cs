@@ -55,7 +55,7 @@ namespace TicTacToe
             {
                 session.GameOver = true;
                 session.Users.Remove(Clients.Caller);
-                Clients.All.RemoveSession(model.SessionID);
+                Clients.All.removeSession(model.SessionID);
             }
         }
 
@@ -80,7 +80,11 @@ namespace TicTacToe
                         user.turn(model.Col, model.Row, session.Turn);
                     }
 
-                    if (playerWin != 0) session.GameOver = true;
+                    if (playerWin != 0)
+                    {
+                        session.GameOver = true;
+                        Clients.All.removeSession(session.SessionID);
+                    }
                     else session.Turn = !session.Turn;
                 }
             }
