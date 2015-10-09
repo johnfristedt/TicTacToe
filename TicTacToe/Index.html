@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/jqueryui/jquery-ui.min.css" rel="stylesheet" />
+    <link href="Content/jqueryui/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="Content/jqueryui/jquery-ui.theme.min.css" rel="stylesheet" />
     <link href="Content/Style.css" rel="stylesheet" />
     <link href="Content/Animations.css" rel="stylesheet" />
 </head>
@@ -43,9 +46,15 @@
                 </table>
 
                 <div id="game" class="hidden">
+                    <div id="game-menu">
+                        <button id="leave-game" class="game-button">Leave Game</button>
+                    </div>
                     <div id="game-over-message"></div>
+                    <div id="progressbars">
+                        <div id="progressbar1" class="progressbar"></div>
+                        <div id="progressbar2" class="progressbar"></div>
+                    </div>
                     <table id="grid"></table>
-                    <button id="leave-game">Leave Game</button>
                 </div>
             </main>
         </div>
@@ -88,10 +97,11 @@
     </div>
 
     <script src="Scripts/jquery-2.1.4.min.js"></script>
-    <script src="Scripts/angular/angular.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jqueryui/jquery-ui.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="signalr/hubs"></script>
+    <script src="Scripts/angular/angular.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/Initialize.js"></script>
     <script src="Scripts/Game.js"></script>
     <script src="Scripts/Lobby.js"></script>

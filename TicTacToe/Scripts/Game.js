@@ -3,12 +3,19 @@
 
 var debug = false;
 var session;
+var wait;
 
 var game = $.connection.ticTacToeHub;
 
 game.client.turn = function (row, col, turn) {
     if (session.playerIndex == 2)
         turn = !turn;
+
+    clearInterval(wait);
+    wait = setInterval(function () {
+        if (!turn) $('#progressbar1').progressbar('option', 'value', parseInt($('#progressbar1').progressbar('option', 'value')) - 1);
+        else $('#progressbar2').progressbar('option', 'value', parseInt($('#progressbar2').progressbar('option', 'value')) - 1);
+    }, 1000);
 
     if (turn)
         grid[col][row].css('background-color', 'red');
