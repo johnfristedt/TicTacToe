@@ -15,6 +15,7 @@
         transform: scale(1, 1);
         opacity: 1;
     }
+
     to {
         transform: scale(1.5, 1.5);
         opacity: 0;
@@ -23,8 +24,9 @@
 
 @keyframes outLeft {
     from {
-        left: calc(50vw - 30vw);
+        left: calc(50vw - 40vh);
     }
+
     to {
         left: -100vw;
     }
@@ -34,13 +36,57 @@
     from {
         left: 100vw;
     }
+
     to {
-        left: calc(50vw - 30vw);
+        left: calc(50vw - 40vh);
+    }
+}
+
+@media (max-width: 990px) {
+    @keyframes outLeft {
+        from {
+            left: calc(50vw - 40vw);
+        }
+
+        to {
+            left: -100vw;
+        }
+    }
+
+    @keyframes inRight {
+        from {
+            left: 100vw;
+        }
+
+        to {
+            left: calc(50vw - 40vw);
+        }
+    }
+}
+
+@media (max-width: 769px) {
+    @keyframes outLeft {
+        from {
+            left: calc(50vw - 45vw);
+        }
+
+        to {
+            left: -100vw;
+        }
+    }
+
+    @keyframes inRight {
+        from {
+            left: 100vw;
+        }
+
+        to {
+            left: calc(50vw - 45vw);
+        }
     }
 }
 
 .fade-in, .fade-out, .out-left, .in-right {
-    
 }
 
 .out-left, .in-right {

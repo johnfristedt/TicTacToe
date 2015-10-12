@@ -10,5 +10,6 @@ namespace TicTacToe.Models
         public string SessionName { get; set; }
         public int BoardSize { get; set; }
         public int WinCondition { get; set; }
+        public int Timer { get; set; }
     }
 }

@@ -15,11 +15,11 @@ namespace TicTacToe.Models
         public bool GameOver { get; set; }
         public List<dynamic> Users { get; set; }
 
-        public Session(string sessionName, int boardSize, int winCondition)
+        public Session(string sessionName, int boardSize, int winCondition, int timer)
         {
             this.SessionID = Guid.NewGuid().ToString();
             this.SessionName = sessionName;
-            this.Board = new Board(boardSize, winCondition);
+            this.Board = new Board(boardSize, winCondition, timer);
             this.Turn = true;
             this.GameOver = false;
             this.Users = new List<dynamic>();

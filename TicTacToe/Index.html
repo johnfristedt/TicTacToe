@@ -21,7 +21,7 @@
                         <th>Stuff</th>
                     </tr>
                     <tr>
-                        <td style="width: 70%">
+                        <td id="gamelist-container">
                             <select id="gamelist" name="gamelist" size="5" class="form-control">
                                 <option ng-repeat="session in sessions" sessionid="{{session.SessionID}}">
                                     {{session.SessionName}}
@@ -55,6 +55,9 @@
                         <div id="progressbar2" class="progressbar"></div>
                     </div>
                     <table id="grid"></table>
+                    <div id="markers">
+                        <!--<div id="the-marker" class="circle marker"></div>-->
+                    </div>
                 </div>
             </main>
         </div>
@@ -76,14 +79,20 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="board-size">Board size: {{boardSize}}</label>
+                                    <label id="board-size-label" for="board-size">Board size: {{boardSize}}</label>
                                     <input type="range" id="board-size" min="3" max="10" value="3" ng-model="boardSize" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="win-condition">Row length to win: {{winCondition}}</label>
+                                    <label id="win-condition-label" for="win-condition">Row length to win: {{winCondition}}</label>
                                     <input type="range" id="win-condition" min="3" max="10" value="3" ng-model="winCondition" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="timer-label" for="timer">Timer: {{timer}}</label>
+                                    <input type="range" id="timer" min="2" max="30" value="3" ng-model="timer" />
                                 </td>
                             </tr>
                         </table>
@@ -98,6 +107,7 @@
 
     <script src="Scripts/jquery-2.1.4.min.js"></script>
     <script src="Scripts/jqueryui/jquery-ui.min.js"></script>
+    <script src="Scripts/jqueryui/touch-fix.js"></script>
     <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="signalr/hubs"></script>
     <script src="Scripts/angular/angular.min.js"></script>

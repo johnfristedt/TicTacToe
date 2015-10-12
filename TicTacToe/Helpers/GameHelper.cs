@@ -57,9 +57,24 @@ namespace TicTacToe.Helpers
             return 0;
         }
 
+        public static void AddSession(Session session)
+        {
+            GameManager.ActiveSessions.Add(session);
+        }
+
         public static Session GetSession(string sessionID)
         {
             return GameManager.ActiveSessions.SingleOrDefault(s => String.Equals(s.SessionID, sessionID));
+        }
+
+        public static Session[] GetLobbySessions()
+        {
+            return GameManager.ActiveSessions.Where(s => s.Users.Count < 2 && !s.GameOver).ToArray();
+        }
+
+        public static void AddUserToSession(string sessionID, dynamic user)
+        {
+            GetSession(sessionID).Users.Add(user);
         }
     }
 }

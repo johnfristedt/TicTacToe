@@ -2,49 +2,32 @@
 /// <reference path="jqueryui/jquery-ui.js" />
 
 var grid;
+var cross = $('<div/>')
+                .addClass('cross');
+var circle = $('<div/>')
+                .addClass('circle');
 
-//buildBoard({ BoardSize: 3 })
 
-//$.widget('tictactoe.progressbar', {
-//    options: {
-//        value: 0
-//    },
-//    _create: function () {
-//        var progress = this.options.value + ' sec';
-//        this.element
-//            .addClass('progressbar')
-//            .text(progress);
-//    },
-//    value: function (value) {
-//        if (value === undefined) {
-//            return this.options.value;
-//        }
-//        this.options.value = this._constrain(value);
-//        var progress = this.options.value + ' sec';
-//        this.element.text(progress);
-//    },
-//    _constrain: function (value) {
-//        if (value > 100) {
-//            value = 100;
-//        }
-//        if (value < 0) {
-//            value = 0;
-//        }
-//        return value;
-//    }
-//});
 
-$('#progressbar1').progressbar({ value: 30, max: 30 });
-$('#progressbar2').progressbar({ value: 30, max: 30 });
+//$(cross).css('width', parseInt($(cross).css('width')) / 3);
+//$(cross).css('width', parseInt($(cross).css('width')) / 3);
 
-//$('<div></div>')
-//    .appendTo('#progressbars')
-//    .progressbar({ value: 20 });
-
+//buildBoard({ BoardSize: 3 });
 
 /* BUILD THE BOARD */
 
 function buildBoard(session) {
+    $('#markers').css('width', '80vh / ' + session.BoardSize);
+    $('#markers').css('height', '80vh / ' + session.BoardSize);
+
+    $('#markers').append(
+        $('<div/>')
+            .attr('id', 'the-marker')
+            .addClass('cross')
+            .addClass('marker')
+    );
+
+    $('#the-marker').draggable();
     grid = new Array(session.BoardSize);
     for (var i = 0; i < session.BoardSize; i++) {
         grid[i] = new Array(session.BoardSize);
@@ -59,8 +42,30 @@ function buildBoard(session) {
                             .attr('row', r)
                             .attr('col', c);
 
-            element.css('width', (1 / session.BoardSize) * 100 + '%');
-            element.css('height', (1 / session.BoardSize) * 100 + '%');
+            element.css('width', 100 / session.BoardSize + '%');
+            element.css('height', 100 / session.BoardSize + '%');
+            element.droppable({
+                over: function () {
+                    $(this).css('background-color', 'gray');
+                },
+                out: function () {
+                    $(this).css('background-color', 'white');
+                },
+                drop: function () {
+                    $(this).css('background-color', 'white');
+                    //$(this).append($(cross).clone());
+                    
+                    var row = parseInt($(this).attr('row'));
+                    var col = parseInt($(this).attr('col'));
+
+                    game.server.turn({
+                        sessionId: session.SessionID,
+                        playerIndex: session.PlayerIndex,
+                        row: row,
+                        col: col
+                    });
+                }
+            });
 
             grid[r][c] = element;
 

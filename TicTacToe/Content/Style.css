@@ -39,10 +39,14 @@ input {
 }
 
 #lobby {
-    width: 60vw;
-    height: 70vh;
-    left: calc(50vw - 30vw);
+    width: 80vh;
+    height: 50vh;
+    left: calc(50vw - 40vh);
 
+}
+
+#gamelist-container {
+    
 }
 
 #gamelist {
@@ -120,6 +124,41 @@ input {
 .game-button {
 }
 
+.cross {
+    position: relative;
+    display: inline-block;
+    width: calc(80vh / 3);
+    height: calc(80vh / 20);
+    background-color: red;
+    transform: rotate(45deg);
+}
+.cross:before {
+    display:inline-block;
+    content: "";
+    background-color: red;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: calc(((80vh / 20) / 2) - ((80vh / 3) / 2));
+    left: calc(((80vh / 3) / 2) - ((80vh / 20) / 2));
+}
+
+.circle {
+    display: inline-block;
+    width: calc(75vh / 3);
+    height: calc(75vh / 3);
+    background: transparent;
+    border: 3vh solid blue;
+    border-radius: 50%;
+}
+
+.marker {
+    position: absolute;
+    top: 50vh;
+    left: -25vh;
+    
+}
+
 /* END GAME STUFF */
 
 .hidden {
@@ -132,6 +171,7 @@ input {
 
     #lobby {
         width: 80vw;
+        left: calc(50vw - 40vw);
     }
 
     /* END LOBBY STUFF*/
@@ -139,9 +179,9 @@ input {
     /* GAME STUFF */
 
     #game {
-        width: 60vw;
-        height: 60vw;
-        left: calc(50vw - 30vw);
+        width: 80vw;
+        height: 80vw;
+        left: calc(50vw - 40vw);
     }
 
     .progressbar {
@@ -156,7 +196,8 @@ input {
     /* LOBBY STUFF */
 
     #lobby {
-        width: 100vw;
+        width: 90vw;
+        left: calc(50vw - 45vw);
     }
 
     /* END LOBBY STUFF*/
@@ -164,14 +205,22 @@ input {
     /* GAME STUFF */
 
     #game {
-        width: 80vw;
-        height: 80vw;
-        left: calc(50vw - 40vw);
+        width: 90vw;
+        height: 90vw;
+        left: calc(50vw - 45vw);
     }
 
     .progressbar {
         width: 38vw;
     }
+
+    .marker {
+    display: inline-block;
+    width: calc((90vw / 3) - 40px);
+    height: calc((90vw / 3) - 40px);
+    float: left;
+    background-color: red;
+}
 
     /* END GAME STUFF */
 }

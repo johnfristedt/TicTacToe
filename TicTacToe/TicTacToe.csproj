@@ -932,6 +932,7 @@
     <Content Include="Scripts\angular\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular\angular-aria.min.js.map" />
     <Content Include="Scripts\angular\angular-animate.min.js.map" />
+    <None Include="Properties\PublishProfiles\FS.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -939,6 +940,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jqueryui\jquery-ui.js" />
     <Content Include="Scripts\jqueryui\jquery-ui.min.js" />
+    <Content Include="Scripts\jqueryui\touch-fix.js" />
     <Content Include="Scripts\Lobby.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -952,6 +954,7 @@
     <Compile Include="Helpers\GameManager.cs" />
     <Compile Include="Hubs\TicTacToeHub.cs" />
     <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\GameOver.cs" />
     <Compile Include="Models\JoinGame.cs" />
     <Compile Include="Models\LeaveGame.cs" />
     <Compile Include="Models\NewGame.cs" />

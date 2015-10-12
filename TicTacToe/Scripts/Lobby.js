@@ -26,22 +26,26 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
     };
 
     game.client.removeSession = function (sessionId) {
-        console.log('remove');
         $scope.$apply(function () {
             for (var i = 0; i < $scope.sessions.length; i++) {
                 if ($scope.sessions[i].SessionID == sessionId)
                     $scope.sessions.splice(i, 1);
             }
         });
-        console.log('after');
     };
 });
 
 $('#host-game').click(function () {
+    $('#session-name').val('');
+    $('#board-size-label').html('Board size: 3');
+    $('#win-condition-label').html('Row length to win: 3');
+    $('#timer-label').html('Timer: 15');
+    $('#session-name').focus();
+    $('#board-size').val(3);
+    $('#win-condition').val(3);
+    $('#timer').val(15);
     var wait = setInterval(function () {
         $('#session-name').focus();
-        $('#board-size').val(3);
-        $('#win-condition').val(3);
         clearInterval(wait);
     }, 500);
 });
@@ -60,7 +64,8 @@ $.connection.hub.start().done(function () {
         game.server.newGame({
             sessionName: $('#session-name').val(),
             boardSize: $('#board-size').val(),
-            winCondition: $('#win-condition').val()
+            winCondition: $('#win-condition').val(),
+            timer: $('#timer').val()
         });
     });
 
@@ -76,6 +81,15 @@ $.connection.hub.start().done(function () {
 });
 
 function startGame(session) {
+    console.log(session);
+    $('#progressbar1').progressbar({
+        value: session.Timer,
+        max: session.Timer
+    });
+    $('#progressbar2').progressbar({
+        value: session.Timer,
+        max: session.Timer
+    });
     $('#game')
         .toggleClass('hidden')
         .toggleClass('in-right');

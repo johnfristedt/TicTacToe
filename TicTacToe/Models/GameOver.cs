@@ -5,12 +5,9 @@ using System.Web;
 
 namespace TicTacToe.Models
 {
-    public class SessionViewModel
+    public class GameOver
     {
         public string SessionID { get; set; }
-        public string SessionName { get; set; }
         public int PlayerIndex { get; set; }
-        public int BoardSize { get; set; }
-        public int Timer { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 
 var debug = false;
 var session;
-var wait;
+var timerSwitch;
 
 var game = $.connection.ticTacToeHub;
 
@@ -11,20 +11,30 @@ game.client.turn = function (row, col, turn) {
     if (session.playerIndex == 2)
         turn = !turn;
 
-    clearInterval(wait);
-    wait = setInterval(function () {
+    clearInterval(timerSwitch);
+    timerSwitch = setInterval(function () {
         if (!turn) $('#progressbar1').progressbar('option', 'value', parseInt($('#progressbar1').progressbar('option', 'value')) - 1);
-        else $('#progressbar2').progressbar('option', 'value', parseInt($('#progressbar2').progressbar('option', 'value')) - 1);
+        else       $('#progressbar2').progressbar('option', 'value', parseInt($('#progressbar2').progressbar('option', 'value')) - 1);
+
+        if (parseInt($('#progressbar' + session.PlayerIndex).progressbar('option', 'value')) == 0) {
+            console.log('out of time');
+            game.server.outOfTime({
+                SessionID: session.SessionID,
+                PlayerIndex: session.PlayerIndex
+            });
+        }
     }, 1000);
 
     if (turn)
-        grid[col][row].css('background-color', 'red');
+        grid[col][row].append($(cross).clone());
     else
-        grid[col][row].css('background-color', 'blue');
+        grid[col][row].append($(circle).clone());
 };
 
 game.client.gameOver = function (data) {
-    $('#game-over-message').html('Player ' + data + ' wins!');
+    console.log(data);
+    clearInterval(timerSwitch);
+    $('#game-over-message').html(data);
 };
 
 $.connection.hub.start().done(function () {

@@ -10,6 +10,7 @@ namespace TicTacToe.Models
     {
         public int BoardSize { get; set; }
         public int WinCondition { get; set; }
+        public int Timer { get; set; }
         public Node[,] Grid { get; set; }
 
         /// <summary>
@@ -17,10 +18,11 @@ namespace TicTacToe.Models
         /// </summary>
         /// <param name="boardSize">Number of rows and columns</param>
         /// <param name="winCondition">How many in a row to win</param>
-        public Board(int boardSize, int winCondition)
+        public Board(int boardSize, int winCondition, int timer)
         {
             this.BoardSize = boardSize;
             this.WinCondition = winCondition;
+            this.Timer = timer;
             this.Grid = new Node[this.BoardSize, this.BoardSize];
 
             Initialize();

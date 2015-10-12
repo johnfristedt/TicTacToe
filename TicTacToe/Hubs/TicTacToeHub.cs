@@ -12,7 +12,7 @@ namespace TicTacToe
     {
         public void NewGame(NewGame model)
         {
-            var session = new Session(model.SessionName, model.BoardSize, model.WinCondition);
+            var session = new Session(model.SessionName, model.BoardSize, model.WinCondition, model.Timer);
             session.Users.Add(Clients.Caller);
             GameManager.ActiveSessions.Add(session);
 
@@ -21,7 +21,8 @@ namespace TicTacToe
                 SessionID = session.SessionID,
                 SessionName = model.SessionName,
                 PlayerIndex = 1,
-                BoardSize = model.BoardSize
+                BoardSize = model.BoardSize,
+                Timer = model.Timer
             };
 
             Clients.Caller.buildBoard(vm);
@@ -31,18 +32,16 @@ namespace TicTacToe
 
         public void JoinGame(JoinGame model)
         {
-            GameManager.ActiveSessions
-                .Single(s => String.Equals(s.SessionID, model.SessionID))
-                .Users
-                .Add(Clients.Caller);
-
+            GameHelper.AddUserToSession(model.SessionID, Clients.Caller);
             var session = GameHelper.GetSession(model.SessionID);
+
             var vm = new SessionViewModel
             {
                 SessionID = session.SessionID,
                 SessionName = session.SessionName,
                 PlayerIndex = 2,
-                BoardSize = session.Board.BoardSize
+                BoardSize = session.Board.BoardSize,
+                Timer = session.Board.Timer
             };
 
             Clients.Caller.buildBoard(vm);
@@ -72,12 +71,12 @@ namespace TicTacToe
                     var playerWin = GameHelper.WinCheck(model.Col, model.Row, session.Board);
                     foreach (var user in session.Users)
                     {
+                        user.turn(model.Col, model.Row, session.Turn);
+
                         if (playerWin != 0)
                         {
-                            user.gameOver(playerWin);
+                            user.gameOver(String.Format("Player {0} has won!", model.PlayerIndex));
                         }
-
-                        user.turn(model.Col, model.Row, session.Turn);
                     }
 
                     if (playerWin != 0)
@@ -87,6 +86,16 @@ namespace TicTacToe
                     }
                     else session.Turn = !session.Turn;
                 }
+            }
+        }
+
+        public void OutOfTime(GameOver model)
+        {
+            var session = GameHelper.GetSession(model.SessionID);
+            foreach (var user in session.Users)
+            {
+                user.gameOver(String.Format("Player {0} ran out of time!", model.PlayerIndex));
+                this.LeaveGame(new LeaveGame { SessionID = model.SessionID });
             }
         }
     }
