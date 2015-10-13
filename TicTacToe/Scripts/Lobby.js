@@ -26,6 +26,7 @@ lobbyApp.controller('lobbyCtrl', function ($scope, $http) {
     };
 
     game.client.removeSession = function (sessionId) {
+        clearInterval(timerSwitch);
         $scope.$apply(function () {
             for (var i = 0; i < $scope.sessions.length; i++) {
                 if ($scope.sessions[i].SessionID == sessionId)

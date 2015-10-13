@@ -26,14 +26,17 @@ game.client.turn = function (row, col, turn) {
     }, 1000);
 
     if (turn)
-        grid[col][row].append($(cross).clone());
+        grid[col][row].append($(crossPrefab).clone());
     else
-        grid[col][row].append($(circle).clone());
+        grid[col][row].append($(circlePrefab).clone());
+
+    setCss();
 };
 
 game.client.gameOver = function (data) {
     console.log(data);
     clearInterval(timerSwitch);
+    $('#markers').html('');
     $('#game-over-message').html(data);
 };
 
@@ -41,17 +44,17 @@ $.connection.hub.start().done(function () {
 
     /* PLAYER TURN */
 
-    $('#grid').on('click', '.node', function () {
-        var row = parseInt($(this).attr('row'));
-        var col = parseInt($(this).attr('col'));
+    //$('#grid').on('click', '.node', function () {
+    //    var row = parseInt($(this).attr('row'));
+    //    var col = parseInt($(this).attr('col'));
 
-        game.server.turn({
-            sessionId: session.SessionID,
-            playerIndex: session.PlayerIndex,
-            row: row,
-            col: col
-        });
-    });
+    //    game.server.turn({
+    //        sessionId: session.SessionID,
+    //        playerIndex: session.PlayerIndex,
+    //        row: row,
+    //        col: col
+    //    });
+    //});
 
     $('#leave-game').click(function () {
         game.server.leaveGame({ SessionID: session.SessionID });

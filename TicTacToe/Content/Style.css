@@ -124,38 +124,31 @@ input {
 .game-button {
 }
 
+#markers {
+    margin-top: 20px;
+}
+
 .cross {
     position: relative;
     display: inline-block;
-    width: calc(80vh / 3);
-    height: calc(80vh / 20);
     background-color: red;
     transform: rotate(45deg);
 }
-.cross:before {
+.crossInner {
     display:inline-block;
-    content: "";
     background-color: red;
-    width: 100%;
-    height: 100%;
     position: absolute;
-    top: calc(((80vh / 20) / 2) - ((80vh / 3) / 2));
-    left: calc(((80vh / 3) / 2) - ((80vh / 20) / 2));
 }
 
 .circle {
     display: inline-block;
-    width: calc(75vh / 3);
-    height: calc(75vh / 3);
     background: transparent;
-    border: 3vh solid blue;
+    border: solid blue;
+    border-width: 3vw;
     border-radius: 50%;
 }
 
 .marker {
-    position: absolute;
-    top: 50vh;
-    left: -25vh;
     
 }
 
